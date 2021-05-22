@@ -17,6 +17,7 @@ public class JpaUserRepository implements UserRepository{
 
     @Override
     public User create(User user) {
+        System.out.println("query!\n");
         em.persist(user);
         return user;
     }

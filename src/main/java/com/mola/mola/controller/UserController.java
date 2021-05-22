@@ -16,8 +16,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("test/")
+    public String say(){
+        return "hello world!";
+    }
+
     @PostMapping("member/")
     public Boolean create(@RequestBody Map<String, Object> m){
+        System.out.println("encountered\n");
        User user = new User();
 
        user.setEmail(m.get("email").toString());
@@ -27,6 +33,7 @@ public class UserController {
        user.setPoint(0);
 
        userService.join(user);
+       System.out.println("111");
        return true;
     }
 

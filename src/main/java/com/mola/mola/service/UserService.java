@@ -18,11 +18,14 @@ public class UserService {
         // 같은 이름이 있는 중복 회원 x
 //
         long start = System.currentTimeMillis();
-            if(validateDuplicatedMember(user)){
+            if(!validateDuplicatedMember(user)){
                 // 중복된 회원 있음.
+                System.out.println(user.getEmail() + " already exists!\n");
+
                 return user.getId();
             }
             else{
+                System.out.println("crating");
                 userRepository.create(user);
             }
 
