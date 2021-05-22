@@ -1,21 +1,43 @@
 package com.mola.mola.domain;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Entity
 public class User {
 
     @Id
     private Long id;
     private String email;
+    private String name;
     private String password;
     private int point;
+    private String phonenum;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-        this.point = 0;
-
+    public String getPhonenum() {
+        return phonenum;
     }
+
+    public void setPhonenum(String phonenum) {
+        this.phonenum = phonenum;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+
+//    public User(String email, String password) {
+//        this.email = email;
+//        this.password = password;
+//        this.point = 0;
+//
+//    }
 
     public Long getId() {
         return id;
