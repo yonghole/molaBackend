@@ -1,5 +1,7 @@
 package com.mola.mola.domain;
 
+import javax.persistence.Id;
+
 public class User {
 
     @Id
