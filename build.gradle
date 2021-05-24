@@ -2,12 +2,12 @@ plugins {
 	id 'org.springframework.boot' version '2.4.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'war'
+//	id 'war'
 }
 
-bootWar {
-	enabled = true
-}
+//bootWar {
+//	enabled = true
+//}
 
 
 
@@ -29,7 +29,7 @@ dependencies {
 
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	runtimeOnly 'com.h2database:h2'
+//	runtimeOnly 'com.h2database:h2'
 	compile 'mysql:mysql-connector-java'
 	testImplementation ('org.springframework.boot:spring-boot-starter-test'){
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
