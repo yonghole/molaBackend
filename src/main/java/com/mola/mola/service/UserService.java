@@ -31,7 +31,7 @@ public class UserService {
         //return true;
     }
 
-    public Long join(User user){
+    public Boolean join(User user){
         // 같은 이름이 있는 중복 회원 x
 //
         long start = System.currentTimeMillis();
@@ -39,14 +39,14 @@ public class UserService {
                 // 중복된 회원 있음.
                 System.out.println(user.getEmail() + " already exists!\n");
 
-                return user.getId();
+                return false;
             }
             else{
                 System.out.println("crating");
                 userRepository.create(user);
             }
 
-            return user.getId();
+            return true;
 
     }
 

@@ -45,9 +45,11 @@ public class UserController {
        user.setPhonenum(m.get("phonenum").toString());
        user.setPoint(0);
 
-       userService.join(user);
+       if(userService.join(user)){
+           return true;
+       }
        System.out.println("111");
-       return true;
+       return false;
     }
 
 
