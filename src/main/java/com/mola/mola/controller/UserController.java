@@ -21,7 +21,20 @@ public class UserController {
         return "hello world!";
     }
 
-    @PostMapping("member/")
+    @PostMapping("login/")
+    public Boolean login(@RequestBody Map<String, Object> m){
+        String email = m.get("email").toString();
+        String password = m.get("password").toString();
+
+        if(userService.login(email,password)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @PostMapping("signup/")
     public Boolean create(@RequestBody Map<String, Object> m){
         System.out.println("encountered\n");
        User user = new User();

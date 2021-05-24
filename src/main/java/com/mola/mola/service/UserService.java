@@ -14,6 +14,23 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public Boolean login(String email, String password){
+        if(userRepository.findByEmail(email).isEmpty()){
+            System.out.println("user not exists!");
+            return false;
+        }
+        else{
+            if(userRepository.check(email,password) == 0){
+                return true;
+            }
+            else{
+                System.out.println("비밀번호 틀림!");
+                return false;
+            }
+        }
+        //return true;
+    }
+
     public Long join(User user){
         // 같은 이름이 있는 중복 회원 x
 //

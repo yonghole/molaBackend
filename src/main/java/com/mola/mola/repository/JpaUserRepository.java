@@ -14,6 +14,12 @@ public class JpaUserRepository implements UserRepository{
         this.em = em;
     }
 
+    @Override
+    public int check(String email, String password) {
+        User pass = em.createQuery("select u from User u where u.email= :email",User.class).setParameter("email",email).getSingleResult();
+        if(pass == null) return 1;
+        return pass.getPassword().compareTo(password);
+    }
 
     @Override
     public User create(User user) {
