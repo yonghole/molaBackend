@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -22,16 +23,11 @@ public class UserController {
     }
 
     @PostMapping("login/")
-    public Boolean login(@RequestBody Map<String, Object> m){
+    public Optional<User> login(@RequestBody Map<String, Object> m){
         String email = m.get("email").toString();
         String password = m.get("password").toString();
 
-        if(userService.login(email,password)){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (userService.login(email,password));
     }
 
     @PostMapping("signup/")

@@ -4,6 +4,8 @@ import com.mola.mola.domain.User;
 import com.mola.mola.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Transactional
 public class UserService {
 
@@ -14,20 +16,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Boolean login(String email, String password){
-        if(userRepository.findByEmail(email).isEmpty()){
-            System.out.println("user not exists!");
-            return false;
-        }
-        else{
-            if(userRepository.check(email,password) == 0){
-                return true;
+    public Optional <User> login(String email, String password){
+
+            if(userRepository.check(email,password) == 0) {
+                return userRepository.findByEmail(email);
+//                return true;
             }
-            else{
-                System.out.println("비밀번호 틀림!");
-                return false;
-            }
-        }
+            else return null;
+
         //return true;
     }
 
