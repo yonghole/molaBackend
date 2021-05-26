@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("user/")
 public class UserController {
     private UserService userService;
 
@@ -48,6 +49,7 @@ public class UserController {
        return false;
     }
 
-
-    //@RequestMapping(value = "member/", method = RequestMethod.POST, produces = "application/json; charset=utf8");
+    @PostMapping("submit/")
+    public Boolean
+//    @RequestMapping(value = "member/", method = RequestMethod.POST, produces = "application/json; charset=utf8");
 }
