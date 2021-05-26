@@ -30,7 +30,7 @@ public class UserService {
     public Boolean join(User user){
         // 같은 이름이 있는 중복 회원 x
 //
-        long start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
             if(!validateDuplicatedMember(user)){
                 // 중복된 회원 있음.
                 System.out.println(user.getEmail() + " already exists!\n");

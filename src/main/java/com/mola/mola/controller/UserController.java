@@ -49,7 +49,5 @@ public class UserController {
        return false;
     }
 
-    @PostMapping("submit/")
-    public Boolean
 //    @RequestMapping(value = "member/", method = RequestMethod.POST, produces = "application/json; charset=utf8");
 }

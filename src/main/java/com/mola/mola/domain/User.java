@@ -1,15 +1,13 @@
 package com.mola.mola.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@TableGenerator(name = "ORDER_SEQ_GENERATOR_USER", table = "TB_SEQUENCE_USER",pkColumnValue = "ORDER_SEQ", allocationSize = 1)
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ORDER_SEQ_GENERATOR_USER")
     private Long id;
     private String email;
     private String name;
