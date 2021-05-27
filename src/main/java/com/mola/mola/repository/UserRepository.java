@@ -10,4 +10,5 @@ public interface UserRepository {
     int check(String email,String password);
     List<User> findAll();
     Optional<User> findByEmail(String email);
+    Optional<User> findByUserId(Long user_id);
 }

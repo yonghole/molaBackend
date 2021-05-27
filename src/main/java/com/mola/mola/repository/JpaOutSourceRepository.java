@@ -24,11 +24,12 @@ public class JpaOutSourceRepository implements OutSourceRepository{
         this.em = em;
     }
 
+
+
     @Override
     public ResponseEntity<OutSource> create(OutSourceInbound outSourceInbound) {
         User user = null;
-        try{
-            user = em.createQuery("select u from User u where u.id = :id",User.class).setParameter("id",outSourceInbound.getUser_id()).getSingleResult();
+
             System.out.println("Here");
             OutSource os = new OutSource();
             os.setUser_id((outSourceInbound.getUser_id()));
@@ -41,17 +42,7 @@ public class JpaOutSourceRepository implements OutSourceRepository{
             em.persist(rqs);
             System.out.println(os.getId());
             return new ResponseEntity<>(os,HttpStatus.OK);
-        }catch (NoResultException nre){
-            OutSource os = new OutSource();
-            os.setUser_id((outSourceInbound.getid()));
-            os.setCreation_date(outSourceInbound.getcreation_date());
-            return new ResponseEntity<>(os,HttpStatus.NOT_FOUND);
-        }
 
-
-
-//        em.persist(outsource);
-//        return true;
     }
 
     @Override
