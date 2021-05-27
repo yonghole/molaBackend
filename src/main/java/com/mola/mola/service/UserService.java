@@ -27,11 +27,14 @@ public class UserService {
 
     public void join(User user) throws DuplicatedEmailError{
         validateDuplicatedMember(user);
+        userRepository.create(user);
     }
 
     private void validateDuplicatedMember(User user) {
         boolean isNotDuplicated =  userRepository.findByEmail(user.getEmail()).isEmpty();
-        if(!isNotDuplicated) throw new DuplicatedEmailError(ErrorCode.EMAIL_DUPLICATION);
+        if(!isNotDuplicated) {
+            throw new DuplicatedEmailError(ErrorCode.EMAIL_DUPLICATION);
+        }
     }
 
     public static class DuplicatedEmailError extends InvalidValueException{

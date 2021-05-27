@@ -13,7 +13,7 @@ public enum ErrorCode{
     INVALID_INPUT_VALUE(400, "C001", "Invalid Input Value"),
     METHOD_NOT_ALLOWED(405, "C002", "Method not Allowed"),
     HANDLE_ACCESS_DENIED(403, "C006", "Access is Denied"),
-    EMAIL_DUPLICATION(409, "M001", "Email is Duplication"),
+    EMAIL_DUPLICATION(409, "M001", "Email is Duplicated"),
     LOGIN_INPUT_INVALID(400, "M002", "Login input is invalid");
 
     private int status;

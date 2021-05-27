@@ -40,10 +40,10 @@ public class UserController {
        user.setPassword(createUserRequest.getPassword());
        user.setPhonenum(createUserRequest.getPhoneNum());
        user.setPoint(0);
-       CreateUserResponse response = new CreateUserResponse();
        userService.join(user);
-       return new ResponseEntity<CreateUserResponse>(HttpStatus.OK);
-
+       CreateUserResponse response = new CreateUserResponse();
+       response.setStatus(200);
+       return new ResponseEntity<CreateUserResponse>(response ,HttpStatus.OK);
     }
 
     @Getter
@@ -63,7 +63,7 @@ public class UserController {
 
     @Data
     public static class CreateUserResponse{
-        private Boolean isSuccess;
+        private int status = 200;
     }
 
     @ExceptionHandler(BusinessException.class)
@@ -72,6 +72,5 @@ public class UserController {
         final ErrorResponse response = ErrorResponse.of(errorCode);
         return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
     }
-
 
 }
