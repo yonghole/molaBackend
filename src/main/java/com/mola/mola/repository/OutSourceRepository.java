@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface OutSourceRepository {
     ResponseEntity<OutSource> create(OutSourceInbound outSourceInbound);
     List<OutSource> findAll();
-    Optional<OutSource> findByUserID(int ID);
+    List<OutSource> findByUserID(Long ID);
 }

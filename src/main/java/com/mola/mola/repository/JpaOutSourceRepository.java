@@ -60,8 +60,8 @@ public class JpaOutSourceRepository implements OutSourceRepository{
     }
 
     @Override
-    public Optional<OutSource> findByUserID(int ID) {
+    public List<OutSource> findByUserID(Long ID) {
         List<OutSource> result = em.createQuery("select o from OutSource o where o.user_id = :id",OutSource.class).setParameter("id",ID).getResultList();
-        return result.stream().findAny();
+        return result;
     }
 }

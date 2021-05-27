@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("outsource/")
 public class OutSourceController {
@@ -32,5 +35,12 @@ public class OutSourceController {
 //        os.setUser_id(outSourceInbound.getUser_id());
 
         return outSourceService.register(outSourceInbound);
+    }
+
+    @PostMapping("searchUserOS")
+    public List<OutSource> searchOutSource(@RequestBody Map<String, Object> m){
+        Long user_id = Long.parseLong(m.get("user_id").toString());
+
+        return outSourceService.search(user_id);
     }
 }
