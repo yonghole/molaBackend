@@ -5,6 +5,7 @@ import com.mola.mola.error.ErrorCode;
 import com.mola.mola.exception.InvalidValueException;
 import com.mola.mola.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
