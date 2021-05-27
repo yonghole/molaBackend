@@ -9,8 +9,11 @@ plugins {
 //	enabled = true
 //}
 
-
-
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
 
 group = 'com.mola'
 version = '0.0.1-SNAPSHOT'
@@ -26,14 +29,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 
-
-
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'com.h2database:h2'
 	compile 'mysql:mysql-connector-java'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation ('org.springframework.boot:spring-boot-starter-test'){
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+
 }
 
 test {
