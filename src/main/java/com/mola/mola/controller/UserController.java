@@ -1,53 +1,77 @@
 package com.mola.mola.controller;
 
 import com.mola.mola.domain.User;
+import com.mola.mola.error.ErrorCode;
+import com.mola.mola.error.ErrorResponse;
+import com.mola.mola.exception.BusinessException;
 import com.mola.mola.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("user/")
 public class UserController {
-    private UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService;
 
-    @GetMapping("test/")
-    public String say(){
-        return "hello world!";
-    }
+//    @PostMapping("login/")
+//    public Optional<User> login(@RequestBody Map<String, Object> m){
+//        String email = m.get("email").toString();
+//        String password = m.get("password").toString();
+//
+//        return (userService.login(email,password));
+//    }
 
-    @PostMapping("login/")
-    public Optional<User> login(@RequestBody Map<String, Object> m){
-        String email = m.get("email").toString();
-        String password = m.get("password").toString();
-
-        return (userService.login(email,password));
-    }
-
-    @PostMapping("signup/")
-    public Boolean create(@RequestBody Map<String, Object> m){
-        System.out.println("encountered\n");
+    @PostMapping("signup")
+    public ResponseEntity<CreateUserResponse> create(@RequestBody @Valid CreateUserRequest createUserRequest){
        User user = new User();
 
-       user.setEmail(m.get("email").toString());
-       user.setPassword(m.get("password").toString());
-       user.setName(m.get("name").toString());
-       user.setPhonenum(m.get("phonenum").toString());
+       user.setEmail(createUserRequest.getEmail());
+       user.setName(createUserRequest.getName());
+       user.setPassword(createUserRequest.getPassword());
+       user.setPhonenum(createUserRequest.getPhoneNum());
        user.setPoint(0);
+       CreateUserResponse response = new CreateUserResponse();
+       userService.join(user);
+       return new ResponseEntity<CreateUserResponse>(HttpStatus.OK);
 
-       if(userService.join(user)){
-           return true;
-       }
-       System.out.println("111");
-       return false;
     }
 
-//    @RequestMapping(value = "member/", method = RequestMethod.POST, produces = "application/json; charset=utf8");
+    @Getter
+    public static class CreateUserRequest{
+        @Email
+        private String email;
+
+        @NotEmpty
+        private String password;
+
+        @NotEmpty
+        private String name;
+
+        @NotEmpty
+        private String phoneNum;
+    }
+
+    @Data
+    public static class CreateUserResponse{
+        private Boolean isSuccess;
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    protected ResponseEntity<ErrorResponse> handleBusinessException(final UserService.DuplicatedEmailError e) {
+        final ErrorCode errorCode = e.getErrorCode();
+        final ErrorResponse response = ErrorResponse.of(errorCode);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
+    }
+
+
 }
