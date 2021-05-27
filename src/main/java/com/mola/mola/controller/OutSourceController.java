@@ -11,6 +11,7 @@ import com.mola.mola.service.UserService;
 import lombok.Data;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,13 +42,27 @@ public class OutSourceController {
 
     @PostMapping("submit/")
     public ResponseEntity<RegisterOutSourceResponse> register(@RequestBody @Valid RegisterOutSourceRequest registerOutSourceRequest) throws ParseException {
-        OutSourceInbound os = new OutSourceInbound();
+        OutSource os = new OutSource();
         os.setUser_id(Long.parseLong(registerOutSourceRequest.getUser_id()));
         SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Date to = transFormat.parse(registerOutSourceRequest.getCreation_date());
-        os.setcreation_date(to);
+        os.setCreation_date(to);
         os.setRequirements(registerOutSourceRequest.getRequirements());
+        os.setCredit(Long.parseLong(registerOutSourceRequest.getCredit()));
+        os.setTitle(registerOutSourceRequest.getTitle());
+        if(!registerOutSourceRequest.getImg_completed().isEmpty()){
+            os.setImg_completed(Long.parseLong(registerOutSourceRequest.getImg_completed()));
+        }
+        else{
+            os.setImg_completed(Long.parseLong("0"));
+        }
+        if(!registerOutSourceRequest.getImg_total().isEmpty()){
+            os.setImg_total(Long.parseLong(registerOutSourceRequest.getImg_total()));
+        }
+        else{
+            os.setImg_total(Long.parseLong("0"));
+        }
         outSourceService.register(os);
         RegisterOutSourceResponse response = new RegisterOutSourceResponse();
         response.setStatus(200);
@@ -60,11 +75,21 @@ public class OutSourceController {
         @NotEmpty
         private String user_id;
 
-        @NotEmpty
+        @DateTimeFormat
         private String creation_date;
 
         @NotEmpty
         private String requirements;
+
+        @NotEmpty
+        private String credit;
+
+        @NotEmpty
+        private String title;
+
+        private String img_completed;
+
+        private String img_total;
     }
 
     @Data

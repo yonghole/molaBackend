@@ -9,7 +9,7 @@ import java.util.Optional;
 
 
 public interface OutSourceRepository {
-    ResponseEntity<OutSource> create(OutSourceInbound outSourceInbound);
+    ResponseEntity<OutSource> create(OutSource outSource);
     List<OutSource> findAll();
     List<OutSource> findByUserID(Long ID);
 }

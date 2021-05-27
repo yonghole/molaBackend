@@ -27,9 +27,9 @@ public class OutSourceService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<OutSource> register(OutSourceInbound outSourceInbound){
-        validateNotExistMember(outSourceInbound.getUser_id());
-        return outSourceRepository.create(outSourceInbound);
+    public ResponseEntity<OutSource> register(OutSource outSource){
+        validateNotExistMember(outSource.getUser_id());
+        return outSourceRepository.create(outSource);
     }
 
     private void validateNotExistMember(Long user_id) {
@@ -44,6 +44,8 @@ public class OutSourceService {
             super(errorCode);
         }
     }
+
+//    public static class
 
     public List<OutSource> search(Long user_id){
         return outSourceRepository.findByUserID(user_id);

@@ -27,18 +27,18 @@ public class JpaOutSourceRepository implements OutSourceRepository{
 
 
     @Override
-    public ResponseEntity<OutSource> create(OutSourceInbound outSourceInbound) {
+    public ResponseEntity<OutSource> create(OutSource outSource) {
         User user = null;
 
             System.out.println("Here");
             OutSource os = new OutSource();
-            os.setUser_id((outSourceInbound.getUser_id()));
-            os.setCreation_date(outSourceInbound.getcreation_date());
+            os.setUser_id((outSource.getUser_id()));
+            os.setCreation_date(outSource.getCreation_date());
             System.out.println(os.getCreation_date());
             em.persist(os);
             Requirements rqs = new Requirements();
             rqs.setOs_id(os.getId());
-            rqs.setRequirements(outSourceInbound.getRequirements());
+            rqs.setRequirements(outSource.getRequirements());
             em.persist(rqs);
             System.out.println(os.getId());
             return new ResponseEntity<>(os,HttpStatus.OK);

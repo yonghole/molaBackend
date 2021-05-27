@@ -12,6 +12,7 @@ public class Requirements {
     private Long id;
     private Long os_id;
 
+
     @Column(name = "contents")
     private String requirements;
 
