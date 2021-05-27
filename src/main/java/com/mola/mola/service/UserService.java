@@ -1,53 +1,46 @@
 package com.mola.mola.service;
 
 import com.mola.mola.domain.User;
+import com.mola.mola.error.ErrorCode;
+import com.mola.mola.exception.InvalidValueException;
 import com.mola.mola.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Transactional
+@Service
 public class UserService {
 
     private final UserRepository userRepository;
 
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public Optional <User> login(String email, String password){
-
+    public Optional<User> login(String email, String password){
             if(userRepository.check(email,password) == 0) {
                 return userRepository.findByEmail(email);
-//                return true;
             }
             else return null;
-
-        //return true;
     }
 
-    public Boolean join(User user){
-        // 같은 이름이 있는 중복 회원 x
-//
-//        long start = System.currentTimeMillis();
-            if(!validateDuplicatedMember(user)){
-                // 중복된 회원 있음.
-                System.out.println(user.getEmail() + " already exists!\n");
-
-                return false;
-            }
-            else{
-                System.out.println("crating");
-                userRepository.create(user);
-            }
-
-            return true;
-
+    public void join(User user) throws DuplicatedEmailError{
+        validateDuplicatedMember(user);
+        userRepository.create(user);
     }
 
-    private Boolean validateDuplicatedMember(User user) {
-        Boolean flag = true;
-        return userRepository.findByEmail(user.getEmail()).isEmpty();
+    private void validateDuplicatedMember(User user) {
+        boolean isNotDuplicated =  userRepository.findByEmail(user.getEmail()).isEmpty();
+        if(!isNotDuplicated) {
+            throw new DuplicatedEmailError(ErrorCode.EMAIL_DUPLICATION);
+        }
     }
+
+    public static class DuplicatedEmailError extends InvalidValueException{
+        public DuplicatedEmailError(ErrorCode errorCode) {
+            super(errorCode);
+        }
+    }
+
 }
