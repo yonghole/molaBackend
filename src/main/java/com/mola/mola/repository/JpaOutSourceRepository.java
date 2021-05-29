@@ -42,6 +42,12 @@ public class JpaOutSourceRepository implements OutSourceRepository{
     }
 
     @Override
+    public List<OutSource> findByID(Long Id){
+        List<OutSource> result = em.createQuery("select u from User u where u.id = :id").setParameter("id",Id).getResultList();
+        return result;
+    }
+
+    @Override
     public List<OutSource> findByUserID(Long ID) {
         List<OutSource> result = em.createQuery("select o from OutSource o where o.user_id = :id",OutSource.class).setParameter("id",ID).getResultList();
         return result;

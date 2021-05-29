@@ -15,8 +15,9 @@ public enum ErrorCode{
     HANDLE_ACCESS_DENIED(403, "C006", "Access is Denied"),
     EMAIL_DUPLICATION(409, "M001", "Email is Duplicated"),
     LOGIN_INPUT_INVALID(400, "M002", "Login input is invalid"),
-    USER_NOT_EXIST_ERROR(404,"M003", "Invalid User ID");
-
+    USER_NOT_EXIST_ERROR(404,"M003", "Invalid User ID"),
+    USER_ID_NULL_ERROR(405,"M004","USER_ID is null."),
+    OS_ID_INVALID_ERROR(406,"M005","Invalid OutSource ID");
 
     private int status;
     private String code;

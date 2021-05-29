@@ -11,4 +11,5 @@ public interface OutSourceRepository {
     ResponseEntity<OutSource> create(OutSource outSource);
     List<OutSource> findAll();
     List<OutSource> findByUserID(Long ID);
+    List<OutSource> findByID(Long Id);
 }
