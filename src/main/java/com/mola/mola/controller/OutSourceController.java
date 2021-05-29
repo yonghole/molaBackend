@@ -1,7 +1,6 @@
 package com.mola.mola.controller;
 
 import com.mola.mola.domain.OutSource;
-import com.mola.mola.domain.OutSourceInbound;
 import com.mola.mola.error.ErrorCode;
 import com.mola.mola.error.ErrorResponse;
 import com.mola.mola.exception.BusinessException;
@@ -41,7 +40,7 @@ public class OutSourceController {
     }
 
     @PostMapping("submit/")
-    public ResponseEntity<RegisterOutSourceResponse> register(@RequestBody @Valid RegisterOutSourceRequest registerOutSourceRequest) throws ParseException {
+    public ResponseEntity<RegisterOutSourceResponse> submit(@RequestBody @Valid RegisterOutSourceRequest registerOutSourceRequest) throws ParseException {
         OutSource os = new OutSource();
         os.setUser_id(Long.parseLong(registerOutSourceRequest.getUser_id()));
         SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");

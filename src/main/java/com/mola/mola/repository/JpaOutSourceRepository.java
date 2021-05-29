@@ -1,7 +1,6 @@
 package com.mola.mola.repository;
 
 import com.mola.mola.domain.OutSource;
-import com.mola.mola.domain.OutSourceInbound;
 import com.mola.mola.domain.Requirements;
 import com.mola.mola.domain.User;
 import org.springframework.http.HttpStatus;
@@ -31,17 +30,9 @@ public class JpaOutSourceRepository implements OutSourceRepository{
         User user = null;
 
             System.out.println("Here");
-            OutSource os = new OutSource();
-            os.setUser_id((outSource.getUser_id()));
-            os.setCreation_date(outSource.getCreation_date());
-            System.out.println(os.getCreation_date());
-            em.persist(os);
-            Requirements rqs = new Requirements();
-            rqs.setOs_id(os.getId());
-            rqs.setRequirements(outSource.getRequirements());
-            em.persist(rqs);
-            System.out.println(os.getId());
-            return new ResponseEntity<>(os,HttpStatus.OK);
+            em.persist(outSource);
+            System.out.println(outSource.getId());
+            return new ResponseEntity<>(outSource,HttpStatus.OK);
 
     }
 

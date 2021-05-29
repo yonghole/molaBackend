@@ -1,7 +1,6 @@
 package com.mola.mola.repository;
 
 import com.mola.mola.domain.OutSource;
-import com.mola.mola.domain.OutSourceInbound;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
