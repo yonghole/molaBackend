@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class FileManagementConfig {
-    @Bean
-    public FileUnzipper fileUnzipper(){
-        return new FileUnzipper();
-    }
+//    @Bean
+//    public FileUnzipper fileUnzipper(){
+//        return new FileUnzipper();
+//    }
 }

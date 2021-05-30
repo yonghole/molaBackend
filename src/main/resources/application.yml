@@ -43,3 +43,9 @@ spring:
             hibernate:
                 format_sql: true
         show-sql: true
+
+file-location:
+    # zipped-file-location 설정할 때 주의 할점 : 맨 뒤에 /를 반드시 붙여주어야 한다.
+    zipped-file-location: /Users/gim-yeonghyeon/zipped_files/
+    # unzipped-file-location 설정할 때 주의 할점 : 맨 뒤에 /를 붙이면 안된다.
+    unzipped-file-location: /Users/gim-yeonghyeon/unzipped_files

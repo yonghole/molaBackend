@@ -1,4 +1,6 @@
 package com.mola.mola.file_management_util;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -10,11 +12,15 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+@Component
 public class FileUnzipper {
 
-    private final String unzippedFilePath = "/Users/gim-yeonghyeon/unzipped_files";
-
-    private final String zipFilePath = "/Users/gim-yeonghyeon/zipped_files/";
+    @Value("{file-location.unzipped-file-location}")
+    private String unzippedFilePath;
+//    private final String unzippedFilePath = "/Users/gim-yeonghyeon/unzipped_files";
+    @Value("{file-location.zipped-file-location}")
+    private String zipFilePath;
+//    private final String zipFilePath = "/Users/gim-yeonghyeon/zipped_files/";
 
     //해당 파일이 존재하는지 확인
     public boolean isExist(String fileName){

@@ -8,12 +8,14 @@ import com.mola.mola.repository.JpaUserRepository;
 import com.mola.mola.repository.OutSourceRepository;
 import com.mola.mola.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.executable.ValidateOnExecution;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -32,6 +34,9 @@ public class ReceiveFileService {
     private final UserRepository userRepository;
     private final OutSourceRepository outSourceRepository;
     private final FileUnzipper fileUnzipper;
+    @Value("{zipped-file-location}")
+    String directoryPath;
+    //String directoryPath = "/Users/gim-yeonghyeon/zipped_file";
 
     public String saveFile(MultipartFile file, String user_id) throws IOException, IllegalStateException {
         ValidateUserID(Long.parseLong(user_id));
@@ -39,8 +44,8 @@ public class ReceiveFileService {
         String returnFilePath = null;
 
         try {
-            String directoryPath = "/Users/gim-yeonghyeon/zipped_file";
-            Path directory = Paths.get(directoryPath).toAbsolutePath().normalize();
+            Path directory = Paths.get(directoryPath + "/").toAbsolutePath().normalize();
+            //Path directory = Paths.get(directoryPath).toAbsolutePath().normalize();
 
             // directory 해당 경로까지 디렉토리를 모두 만든다.
             Files.createDirectories(directory);

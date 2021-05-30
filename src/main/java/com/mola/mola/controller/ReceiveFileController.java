@@ -34,13 +34,7 @@ public class ReceiveFileController {
    public String saveFile(@ModelAttribute @Valid FileReceiveDto fileReceiveDto) throws IOException{
        String filePath= receiveFileService.saveFile(fileReceiveDto.getFile(), fileReceiveDto.getUserId().toString()); // 해당 파일을 저장하고
        List<File> fileList = receiveFileService.unzipFileByFilePath(filePath); // 해당 파일들을 unzip
-
        outSourceService.registerImageFiles(fileList, fileReceiveDto.getOutSourceId());
-//       for (File file : fileList) {
-//           String url = s3Service.upload(file, "outsources/" + fileReceiveDto.outSourceId);
-//           System.out.println(url);
-//       }
-
        return "uploaded";
    }
 
