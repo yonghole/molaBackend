@@ -4,11 +4,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Requirements")
-@TableGenerator(name = "ORDER_SEQ_GENERATOR3", table = "TB_SEQUENCE_RE",pkColumnValue = "ORDER_SEQ", allocationSize = 1)
-
 public class Requirements {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ORDER_SEQ_GENERATOR3")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long os_id;
 

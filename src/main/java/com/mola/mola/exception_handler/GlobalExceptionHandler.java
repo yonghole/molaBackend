@@ -26,4 +26,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, ex.getBindingResult());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+
 }

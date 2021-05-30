@@ -17,7 +17,7 @@ public enum ErrorCode{
     LOGIN_INPUT_INVALID(400, "M002", "Login input is invalid"),
     USER_NOT_EXIST_ERROR(404,"M003", "Invalid User ID"),
     USER_ID_NULL_ERROR(405,"M004","USER_ID is null."),
-    OS_ID_INVALID_ERROR(406,"M005","Invalid OutSource ID");
+    OUTSOURCE_ID_INVALID_ERROR(406,"M005","Invalid OutSource ID");
 
     private int status;
     private String code;
