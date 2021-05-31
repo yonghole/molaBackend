@@ -19,7 +19,7 @@ server:
     port: 8080
 
 spring:
-#   영현 실행 환경
+#   영현 로컬 실행 환경
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         password: '!!dnwn556'
