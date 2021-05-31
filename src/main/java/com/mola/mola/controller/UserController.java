@@ -85,7 +85,7 @@ public class UserController {
        user.setEmail(createUserRequest.getEmail());
        user.setName(createUserRequest.getName());
        user.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
-       user.setPhonenum(createUserRequest.getPhoneNum());
+       user.setPhoneNum(createUserRequest.getPhoneNum());
        user.setPoint(0);
        userService.join(user);
 

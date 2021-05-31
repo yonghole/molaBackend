@@ -3,6 +3,7 @@ package com.mola.mola.repository;
 import com.mola.mola.domain.OutSource;
 import com.mola.mola.domain.Requirements;
 import com.mola.mola.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,23 +19,13 @@ import java.util.Optional;
 @Transactional
 public class JpaOutSourceRepository implements OutSourceRepository{
 
-    private final EntityManager em;
-
-    public JpaOutSourceRepository(EntityManager em) {
-        this.em = em;
-    }
-
-
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
-    public ResponseEntity<OutSource> create(OutSource outSource) {
-        User user = null;
-
-            System.out.println("Here");
-            em.persist(outSource);
-            System.out.println(outSource.getId());
-            return new ResponseEntity<>(outSource,HttpStatus.OK);
-
+    public Long create(OutSource outSource) {
+        em.persist(outSource);
+        return outSource.getId();
     }
 
     @Override
@@ -42,9 +34,9 @@ public class JpaOutSourceRepository implements OutSourceRepository{
     }
 
     @Override
-    public List<OutSource> findByID(Long Id){
-        List<OutSource> result = em.createQuery("select u from User u where u.id = :id").setParameter("id",Id).getResultList();
-        return result;
+    public Optional<OutSource> findByID(Long id){
+        OutSource result = em.find(OutSource.class, id);
+        return Optional.ofNullable(result);
     }
 
     @Override

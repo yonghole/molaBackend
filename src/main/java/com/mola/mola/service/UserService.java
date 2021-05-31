@@ -31,6 +31,10 @@ public class UserService {
         userRepository.create(user);
     }
 
+    public Optional<User> findByUserId(Long id){
+        return userRepository.findByUserId(id);
+    }
+
     private void validateDuplicatedMember(User user) {
         boolean isNotDuplicated =  userRepository.findByEmail(user.getEmail()).isEmpty();
         if(!isNotDuplicated) {
@@ -43,5 +47,6 @@ public class UserService {
             super(errorCode);
         }
     }
+
 
 }

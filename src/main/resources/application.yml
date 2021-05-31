@@ -1,0 +1,51 @@
+jwtExpirationMs: 86400000
+jwtSecret: this_is_fucking_jwt_key_fucker_don't_touch_this
+logging:
+    level:
+        org:
+            hibernate: info
+
+cloud:
+    aws:
+        s3:
+            bucket: eden6187
+        region:
+            auto: false
+            static: ap-northeast-2
+        stack:
+            auto: false
+
+server:
+    port: 8080
+
+spring:
+#   영현 로컬 실행 환경
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: '!!dnwn556'
+        url: jdbc:mysql://localhost:3306/mola?serverTimezone=UTC&characterEncoding=UTF-8
+        username: eden6187
+
+#    상호 실행 환경
+#    datasource:
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        password: password
+#        url: jdbc:mysql://13.209.232.235:3306/mola?useSSL=false&Unicode=true&serverTimezone=Asia/Seoul
+#        username: yong
+
+    jpa:
+        database: mysql
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        generate-ddl: true
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                format_sql: true
+        show-sql: true
+
+file-location:
+    # zipped-file-location 설정할 때 주의 할점 : 맨 뒤에 /를 반드시 붙여주어야 한다.
+    zipped-file-location: /Users/gim-yeonghyeon/zipped_files/
+    # unzipped-file-location 설정할 때 주의 할점 : 맨 뒤에 /를 붙이면 안된다.
+    unzipped-file-location: /Users/gim-yeonghyeon/unzipped_files

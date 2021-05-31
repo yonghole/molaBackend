@@ -1,6 +1,7 @@
 package com.mola.mola.controller;
 
 import com.mola.mola.domain.OutSource;
+import com.mola.mola.domain.User;
 import com.mola.mola.error.ErrorCode;
 import com.mola.mola.error.ErrorResponse;
 import com.mola.mola.exception.BusinessException;
@@ -9,6 +10,7 @@ import com.mola.mola.service.OutSourceService;
 import com.mola.mola.service.UserService;
 import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -18,21 +20,23 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("outsource/")
+@RequiredArgsConstructor
 public class OutSourceController {
-    private OutSourceService outSourceService;
 
-    @Autowired
-    public OutSourceController(OutSourceService outSourceService) {
-        this.outSourceService = outSourceService;
-    }
+    private final OutSourceService outSourceService;
+    private final UserService userService;
 
     @GetMapping("test/")
     public String hello(){
@@ -40,66 +44,66 @@ public class OutSourceController {
     }
 
     @PostMapping("submit/")
-    public ResponseEntity<RegisterOutSourceResponse> submit(@RequestBody @Valid RegisterOutSourceRequest registerOutSourceRequest) throws ParseException {
-        OutSource os = new OutSource();
-        os.setUser_id(Long.parseLong(registerOutSourceRequest.getUser_id()));
-        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public ResponseEntity<RegisterOutSourceResponse> submit(@RequestBody @Valid RegisterOutSourceRequest registerOutSourceRequest)
+            throws ParseException {
 
-        Date to = transFormat.parse(registerOutSourceRequest.getCreation_date());
-        os.setCreation_date(to);
+        // 새로 만들 OS 객체
+        OutSource os = new OutSource();
+
+        // 기존에 존재하는 user 객체
+        User user = userService.findByUserId(registerOutSourceRequest.getUserId()).orElseThrow();
+        os.setUser(user);
+
+        // request에 들어있는 값들 처리
+        LocalDate date = LocalDate.parse(registerOutSourceRequest.getCreationDate(), DateTimeFormatter.ISO_DATE);
+
+        os.setOutsourceCreationDate(date);
         os.setRequirements(registerOutSourceRequest.getRequirements());
-        os.setCredit(Long.parseLong(registerOutSourceRequest.getCredit()));
+        os.setCredit(registerOutSourceRequest.getCredit());
         os.setTitle(registerOutSourceRequest.getTitle());
-        if(!registerOutSourceRequest.getImg_completed().isEmpty()){
-            os.setImg_completed(Long.parseLong(registerOutSourceRequest.getImg_completed()));
-        }
-        else{
-            os.setImg_completed(Long.parseLong("0"));
-        }
-        if(!registerOutSourceRequest.getImg_total().isEmpty()){
-            os.setImg_total(Long.parseLong(registerOutSourceRequest.getImg_total()));
-        }
-        else{
-            os.setImg_total(Long.parseLong("0"));
-        }
-        outSourceService.register(os);
+        os.setImgCompleted(-1L);
+        os.setImgTotal(-1L);
+
+        Long id = outSourceService.register(os);
+
         RegisterOutSourceResponse response = new RegisterOutSourceResponse();
         response.setStatus(200);
+        response.setOutsourceId(id);
 
         return new ResponseEntity<RegisterOutSourceResponse>(response,HttpStatus.OK);
     }
 
     @Getter
     public static class RegisterOutSourceRequest{
-        @NotEmpty
-        private String user_id;
+        @NotNull
+        private Long userId;
 
         @DateTimeFormat
-        private String creation_date;
+        private String creationDate;
 
         @NotEmpty
         private String requirements;
 
-        @NotEmpty
-        private String credit;
+        @NotNull
+        private Long credit;
 
         @NotEmpty
         private String title;
 
-        private String img_completed;
+        private Long imgCompleted;
 
-        private String img_total;
+        private Long imgTotal;
     }
 
     @Data
     public static class RegisterOutSourceResponse{
         private int status = 200;
+        private long outsourceId;
     }
 
     @PostMapping("searchUserOS")
     public List<OutSource> searchOutSource(@RequestBody Map<String, Object> m){
         Long user_id = Long.parseLong(m.get("user_id").toString());
-
         return outSourceService.search(user_id);
     }
 

@@ -1,18 +1,23 @@
 package com.mola.mola.repository;
 
 import com.mola.mola.domain.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
+@Transactional
+@RequiredArgsConstructor
 public class JpaUserRepository implements UserRepository{
 
+    @PersistenceContext
     private final EntityManager em;
-
-    public JpaUserRepository(EntityManager em) {
-        this.em = em;
-    }
 
     @Override
     public int check(String email, String password) {
@@ -40,7 +45,7 @@ public class JpaUserRepository implements UserRepository{
 
     @Override
     public Optional<User> findByUserId(Long user_id){
-        List<User> result = em.createQuery("select u from User u where u.id = :id",User.class).setParameter("id",user_id).getResultList();
-        return result.stream().findAny();
+        User user = em.find(User.class, user_id);
+        return Optional.ofNullable(user);
     }
 }

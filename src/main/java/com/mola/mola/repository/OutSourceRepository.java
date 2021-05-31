@@ -8,8 +8,8 @@ import java.util.Optional;
 
 
 public interface OutSourceRepository {
-    ResponseEntity<OutSource> create(OutSource outSource);
+    Long create(OutSource outSource);
     List<OutSource> findAll();
-    List<OutSource> findByUserID(Long ID);
-    List<OutSource> findByID(Long Id);
+    List<OutSource> findByUserID(Long id);
+    Optional<OutSource> findByID(Long id);
 }
