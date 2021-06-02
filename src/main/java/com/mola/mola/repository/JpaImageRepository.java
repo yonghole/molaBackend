@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -24,5 +25,12 @@ public class JpaImageRepository implements ImageRepository{
         em.flush();
         return image;
     }
+
+    @Override
+    // 랜덤으로 하나의 image를 선택한다.
+    public Optional<Image> findRandomImage() {
+        return Optional.empty();
+    }
+
 
 }
