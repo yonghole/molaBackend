@@ -2,6 +2,9 @@ package com.mola.mola.repository;
 
 import com.mola.mola.domain.Image;
 
+import java.util.Optional;
+
 public interface ImageRepository {
-    public Image createImage(String url);
+    Image createImage(String url);
+    Optional<Image> findRandomImage();
 }

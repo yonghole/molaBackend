@@ -19,21 +19,21 @@ server:
     port: 8080
 
 spring:
-#   영현 로컬 실행 환경
-#    datasource:
-#        driver-class-name: com.mysql.cj.jdbc.Driver
-#        password: '!!dnwn556'
-#        url: jdbc:mysql://localhost:3306/mola?serverTimezone=UTC&characterEncoding=UTF-8
-#        username: eden6187
-
-
-
-    #상호 실행 환경
+   #영현 로컬 실행 환경
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        password: password
-        url: jdbc:mysql://13.209.232.235:3306/mola?useSSL=false&Unicode=true&serverTimezone=Asia/Seoul
-        username: yong
+        password: '!!dnwn556'
+        url: jdbc:mysql://localhost:3306/mola?serverTimezone=UTC&characterEncoding=UTF-8
+        username: eden6187
+
+#    #상호 실행 환경
+#    datasource:
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        password: password
+#        url: jdbc:mysql://13.209.232.235:3306/mola?useSSL=false&Unicode=true&serverTimezone=Asia/Seoul
+#        username: yong
+
+
     servlet:
         multipart:
             max-file-size: 10MB
@@ -43,7 +43,7 @@ spring:
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
         generate-ddl: true
         hibernate:
-            ddl-auto: update
+            ddl-auto: create
         properties:
             hibernate:
                 format_sql: true

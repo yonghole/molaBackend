@@ -89,10 +89,6 @@ public class OutSourceController {
 
         @NotEmpty
         private String title;
-
-        private Long imgCompleted;
-
-        private Long imgTotal;
     }
 
     @Data
