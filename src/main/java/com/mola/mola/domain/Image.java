@@ -17,7 +17,7 @@ public class Image {
     private Long id;
     private String url;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "outsource_id", referencedColumnName = "outsource_id")
     private OutSource outSource;
 
