@@ -16,6 +16,19 @@ uniqueConstraints = @UniqueConstraint(
 ))
 public class WorkHistory {
 
+    private WorkHistory() {}
+
+    public static WorkHistory withTimeOf(Image image, User user){
+
+        WorkHistory workHistory = new WorkHistory();
+        workHistory.setImage(image);
+        workHistory.setIsRejected(false);
+        workHistory.setUser(user);
+        workHistory.setWorkTime(LocalDateTime.now());
+
+        return workHistory;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "work_history_id")
@@ -33,7 +46,6 @@ public class WorkHistory {
     LocalDateTime workTime;
 
     @Column(name = "is_rejected")
-
-    Boolean isRejected;
+    Boolean isRejected = true;
 
 }

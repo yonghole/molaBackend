@@ -32,4 +32,7 @@ public class Image {
 
     @Column(name = "width")
     private Double width;
+
+    @OneToOne(mappedBy = "image", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private WorkHistory workHistory;
 }

@@ -1,12 +1,16 @@
 package com.mola.mola.repository;
 
 import com.mola.mola.domain.Image;
+import com.mola.mola.exception.InvalidValueException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.HibernateException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,5 +47,14 @@ public class JpaImageRepository implements ImageRepository{
         return Optional.ofNullable((Image) imageList.get(0));
     }
 
+    @Override
+    public Optional<Image> findImageById(Long id) {
+        return Optional.ofNullable(em.find(Image.class, id));
+    }
 
+    @Override
+    // 이미지 정보 저장.
+    public void saveImage(Image image) throws IllegalStateException {
+        em.persist(image);
+    }
 }
