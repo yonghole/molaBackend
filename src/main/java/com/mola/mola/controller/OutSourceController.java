@@ -102,6 +102,7 @@ public class OutSourceController {
         Long user_id = (searchOutSourceRequest.getUser_id());
         return outSourceService.search(user_id);
     }
+
     @Getter
     public static class SearchOutSourceRequest{
         @NotNull

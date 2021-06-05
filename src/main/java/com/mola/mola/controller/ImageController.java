@@ -3,13 +3,12 @@ package com.mola.mola.controller;
 import com.mola.mola.domain.Image;
 import com.mola.mola.service.ImageService;
 import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,20 +23,27 @@ public class ImageController {
     }
 
     @PostMapping("/image/{image-id}")
-    public ResponseEntity<SetNewImageResponse> setImageInformation(@PathVariable(value = "image-id") Long imageId, @RequestBody NewImageInfo newImageInfo){
-        imageService.saveImage(imageId, newImageInfo.getUserId(), newImageInfo.getXCoordinate(), newImageInfo.getYCoordinate());
-        return new ResponseEntity<SetNewImageResponse>(new SetNewImageResponse(),HttpStatus.OK);
+    public ResponseEntity<SetNewImageInformationResponse> setImageInformation(@PathVariable(value = "image-id") Long imageId, @RequestBody SetNewImageInformationRequest newImageInfo){
+        imageService.saveImage(imageId, newImageInfo);
+        return new ResponseEntity<SetNewImageInformationResponse>(new SetNewImageInformationResponse(),HttpStatus.OK);
     }
 
     @Data
-    public static class NewImageInfo{
+    public static class SetNewImageInformationRequest{
+        @NotNull
         private Long userId;
+        @NotNull
         private Double yCoordinate;
+        @NotNull
         private Double xCoordinate;
+        @NotNull
+        private Double height;
+        @NotNull
+        private Double width;
     }
 
     @Data
-    public static class SetNewImageResponse{
+    public static class SetNewImageInformationResponse {
         private Integer httpStatusCode = 200;
     }
 

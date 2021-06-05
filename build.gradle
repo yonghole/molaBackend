@@ -50,7 +50,8 @@ dependencies {
 }
 
 test {
-	useJUnitPlatform()
+//	useJUnitPlatform()
+	exclude '**/*'
 }
 
 //compile 'mysql:mysql-connector-java'

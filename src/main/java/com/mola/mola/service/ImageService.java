@@ -1,5 +1,6 @@
 package com.mola.mola.service;
 
+import com.mola.mola.controller.ImageController;
 import com.mola.mola.controller.UserController;
 import com.mola.mola.domain.Image;
 import com.mola.mola.domain.User;
@@ -29,14 +30,17 @@ public class ImageService {
     }
 
     @Transactional
-    public void saveImage(Long imageId, Long userId ,Double xCoordinate, Double yCoordinate){
+    public void saveImage(Long imageId, ImageController.SetNewImageInformationRequest newImageInformationRequest){
         Image image = imageRepository.findImageById(imageId).orElseThrow(() -> new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND));
-        User user = userRepository.findByUserId(userId).orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXIST_ERROR));
+        User user = userRepository.findByUserId(newImageInformationRequest.getUserId()).orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXIST_ERROR));
         WorkHistory workHistory = WorkHistory.withTimeOf(image, user);
-        image.setXCoordinate(xCoordinate);
-        image.setYCoordinate(yCoordinate);
-        image.setWorkHistory(workHistory);
-        imageRepository.saveImage(image);
 
+        image.setXCoordinate(newImageInformationRequest.getXCoordinate());
+        image.setYCoordinate(newImageInformationRequest.getYCoordinate());
+        image.setWidth(newImageInformationRequest.getWidth());
+        image.setHeight(newImageInformationRequest.getHeight());
+        image.setWorkHistory(workHistory);
+
+        imageRepository.saveImage(image);
     }
 }
