@@ -1,34 +1,29 @@
 package com.mola.mola.controller;
 
+import com.mola.mola.domain.Image;
 import com.mola.mola.domain.OutSource;
 import com.mola.mola.domain.User;
 import com.mola.mola.error.ErrorCode;
 import com.mola.mola.error.ErrorResponse;
 import com.mola.mola.exception.BusinessException;
-import com.mola.mola.repository.OutSourceRepository;
 import com.mola.mola.service.OutSourceService;
 import com.mola.mola.service.UserService;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("outsource/")
@@ -97,10 +92,12 @@ public class OutSourceController {
         private long outsourceId;
     }
 
-    @PostMapping("/searchUserOSList")
-    public List<OutSource> searchOutSource(@RequestBody @Valid SearchOutSourceRequest searchOutSourceRequest){
+    @PostMapping("/searchUserOSList") //
+    public ResponseEntity<SearchOutSourceResponse> searchOutSource(@RequestBody @Valid SearchOutSourceRequest searchOutSourceRequest){
         Long user_id = (searchOutSourceRequest.getUser_id());
-        return outSourceService.search(user_id);
+        SearchOutSourceResponse response = new SearchOutSourceResponse();
+        response.setOutSources(outSourceService.search(user_id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Getter
@@ -109,6 +106,36 @@ public class OutSourceController {
         private Long user_id;
     }
 
+    @Data
+    public static class SearchOutSourceResponse{
+        private Integer httpStatusCode = 200;
+        private List<OutSource> outSources;
+    }
+
+    @GetMapping("/searchUserOSList/{outsource-id}")
+    public ResponseEntity<GetOutSourceResponse> getOutSourceInfo(@PathVariable("outsource-id") Long outsourceId){
+            GetOutSourceResponse response = new GetOutSourceResponse();
+            OutSource outSource = outSourceService.getOutsourceById(outsourceId);
+            Image image = outSourceService.getRandomImageOf(outSource);
+
+            response.setOutSourceInfo(outSource);
+            response.setRandomImageInfo(image);
+
+            return new ResponseEntity<GetOutSourceResponse>(response, HttpStatus.OK);
+    }
+
+    @Getter
+    public static class GetOutSourceRequest{
+        @NotNull
+        private Long outsourceId;
+    }
+
+    @Data
+    public static class GetOutSourceResponse{
+        private Integer httpStatusCode = 200;
+        private OutSource outSourceInfo;
+        private Image randomImageInfo;
+    }
 
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(final OutSourceService.UserNotExistError e) {
@@ -116,4 +143,5 @@ public class OutSourceController {
         final ErrorResponse response = ErrorResponse.of(errorCode);
         return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
     }
+
 }

@@ -6,6 +6,7 @@ import com.mola.mola.exception.BusinessException;
 import com.mola.mola.service.OutSourceService;
 import com.mola.mola.service.ReceiveFileService;
 import com.mola.mola.service.S3Service;
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -38,8 +39,7 @@ public class ReceiveFileController {
        return "uploaded";
    }
 
-   @Getter
-   @Setter
+   @Data
    public static class FileReceiveDto{
        private MultipartFile file;
 

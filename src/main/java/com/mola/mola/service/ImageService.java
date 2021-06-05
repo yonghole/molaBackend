@@ -29,6 +29,10 @@ public class ImageService {
         return imageRepository.findRandomImage().orElseThrow(() -> new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND));
     }
 
+    public Image getImage(Long imageId){
+        return imageRepository.findImageById(imageId).orElseThrow(()->new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND));
+    }
+
     @Transactional
     public void saveImage(Long imageId, ImageController.SetNewImageInformationRequest newImageInformationRequest){
         Image image = imageRepository.findImageById(imageId).orElseThrow(() -> new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND));
