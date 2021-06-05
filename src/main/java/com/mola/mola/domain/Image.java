@@ -1,5 +1,6 @@
 package com.mola.mola.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class Image {
     private String url;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "outsource_id", referencedColumnName = "outsource_id")
     private OutSource outSource;
 

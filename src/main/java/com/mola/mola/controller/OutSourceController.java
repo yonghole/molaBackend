@@ -97,11 +97,17 @@ public class OutSourceController {
         private long outsourceId;
     }
 
-    @PostMapping("searchUserOS")
-    public List<OutSource> searchOutSource(@RequestBody Map<String, Object> m){
-        Long user_id = Long.parseLong(m.get("user_id").toString());
+    @PostMapping("/searchUserOSList")
+    public List<OutSource> searchOutSource(@RequestBody @Valid SearchOutSourceRequest searchOutSourceRequest){
+        Long user_id = (searchOutSourceRequest.getUser_id());
         return outSourceService.search(user_id);
     }
+    @Getter
+    public static class SearchOutSourceRequest{
+        @NotNull
+        private Long user_id;
+    }
+
 
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(final OutSourceService.UserNotExistError e) {
