@@ -2,6 +2,7 @@ package com.mola.mola.service;
 
 import com.mola.mola.error.ErrorCode;
 import com.mola.mola.exception.DuplicateFileException;
+import com.mola.mola.exception.EntityNotFoundException;
 import com.mola.mola.exception.InvalidValueException;
 import com.mola.mola.file_management_util.FileUnzipper;
 import com.mola.mola.repository.JpaUserRepository;
@@ -82,30 +83,27 @@ public class ReceiveFileService {
     }
 
     public void ValidateUserID(Long user_id) {
-        boolean userExists = userRepository.findByUserId(user_id).isEmpty();
-        if(userExists){
-            throw new ReceiveFileService.UserIdNullError(ErrorCode.USER_NOT_EXIST_ERROR);
-        }
+       userRepository.findByUserId(user_id).orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXIST_ERROR));
     }
 
     //외주 아이디가 제대로 등록된 애인지 확인용
     public void ValidateOsID(Long os_id){
         boolean osExists = outSourceRepository.findByID(os_id).isEmpty();
         if(osExists){
-            throw new ReceiveFileService.OSNotValidError(ErrorCode.OUTSOURCE_ID_INVALID_ERROR);
+            throw new EntityNotFoundException(ErrorCode.OUTSOURCE_ID_INVALID_ERROR);
         }
     }
 
-    public static class UserIdNullError extends InvalidValueException {
-        public UserIdNullError(ErrorCode errorCode) {
-            super(errorCode);
-        }
-    }
-
-    public static class OSNotValidError extends InvalidValueException {
-        public OSNotValidError(ErrorCode errorCode) {
-            super(errorCode);
-        }
-    }
+//    public static class UserIdNullError extends InvalidValueException {
+//        public UserIdNullError(ErrorCode errorCode) {
+//            super(errorCode);
+//        }
+//    }
+//
+//    public static class OSNotValidError extends InvalidValueException {
+//        public OSNotValidError(ErrorCode errorCode) {
+//            super(errorCode);
+//        }
+//    }
 
 }

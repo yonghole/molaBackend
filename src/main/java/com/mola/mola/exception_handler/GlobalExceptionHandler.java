@@ -1,6 +1,7 @@
 package com.mola.mola.exception_handler;
 
 
+import com.mola.mola.controller.ImageController;
 import com.mola.mola.error.ErrorCode;
 import com.mola.mola.error.ErrorResponse;
 import com.mola.mola.exception.BusinessException;
@@ -31,7 +32,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<Object> handleBusinessException(BusinessException ex) {
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
+        ErrorCode errorCode = ex.getErrorCode();
+        final ErrorResponse response = ErrorResponse.of(errorCode);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 

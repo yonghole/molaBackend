@@ -115,6 +115,7 @@ public class OutSourceController {
     @GetMapping("/searchUserOSList/{outsource-id}")
     public ResponseEntity<GetOutSourceResponse> getOutSourceInfo(@PathVariable("outsource-id") Long outsourceId){
             GetOutSourceResponse response = new GetOutSourceResponse();
+
             OutSource outSource = outSourceService.getOutsourceById(outsourceId);
             Image image = outSourceService.getRandomImageOf(outSource);
 
@@ -137,11 +138,11 @@ public class OutSourceController {
         private Image randomImageInfo;
     }
 
-    @ExceptionHandler(BusinessException.class)
-    protected ResponseEntity<ErrorResponse> handleBusinessException(final OutSourceService.UserNotExistError e) {
-        final ErrorCode errorCode = e.getErrorCode();
-        final ErrorResponse response = ErrorResponse.of(errorCode);
-        return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
-    }
+//    @ExceptionHandler(BusinessException.class)
+//    protected ResponseEntity<ErrorResponse> handleBusinessException(final OutSourceService.UserNotExistError e) {
+//        final ErrorCode errorCode = e.getErrorCode();
+//        final ErrorResponse response = ErrorResponse.of(errorCode);
+//        return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
+//    }
 
 }

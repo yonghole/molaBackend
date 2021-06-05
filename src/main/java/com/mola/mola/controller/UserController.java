@@ -48,7 +48,6 @@ public class UserController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-
         LoginResponse response = new LoginResponse();
 
         response.setEmail(userDetails.getEmail());
@@ -114,11 +113,11 @@ public class UserController {
         private int status = 200;
     }
 
-    @ExceptionHandler(BusinessException.class)
-    protected ResponseEntity<ErrorResponse> handleBusinessException(final UserService.DuplicatedEmailError e) {
-        final ErrorCode errorCode = e.getErrorCode();
-        final ErrorResponse response = ErrorResponse.of(errorCode);
-        return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
-    }
+//    @ExceptionHandler(BusinessException.class)
+//    protected ResponseEntity<ErrorResponse> handleBusinessException(final UserService.DuplicatedEmailError e) {
+//        final ErrorCode errorCode = e.getErrorCode();
+//        final ErrorResponse response = ErrorResponse.of(errorCode);
+//        return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
+//    }
 
 }
