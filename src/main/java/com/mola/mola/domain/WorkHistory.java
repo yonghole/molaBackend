@@ -1,5 +1,7 @@
 package com.mola.mola.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,6 +42,7 @@ public class WorkHistory {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
+    @JsonManagedReference
     private Image image;
 
     @Column(name = "work_time")

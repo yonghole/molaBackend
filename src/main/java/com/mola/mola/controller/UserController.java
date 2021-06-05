@@ -94,7 +94,7 @@ public class UserController {
        return new ResponseEntity<CreateUserResponse>(response ,HttpStatus.OK);
     }
 
-    @Getter
+    @Data
     public static class CreateUserRequest{
         @Email
         private String email;

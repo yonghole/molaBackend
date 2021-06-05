@@ -66,4 +66,18 @@ public class OutSourceService {
         return outSourceRepository.findByUserID(user_id);
     }
 
+    public Image getRandomImageOf(OutSource outSource){
+        outSourceRepository.findByID(outSource.getId()).orElseThrow(() -> new EntityNotFoundException(ErrorCode.OUTSOURCE_ID_INVALID_ERROR));
+        int imageMaxIdx = outSource.getImageList().size();
+        int min = 0;
+        int max = imageMaxIdx;
+        int random = (int) ((Math.random() * (max - min)) + min);
+        Image image = outSource.getImageList().get(random);
+        return image;
+    }
+
+    public OutSource getOutsourceById(Long id){
+        return outSourceRepository.findByID(id).orElseThrow(() -> new EntityNotFoundException(ErrorCode.OUTSOURCE_ID_INVALID_ERROR));
+    }
+
 }

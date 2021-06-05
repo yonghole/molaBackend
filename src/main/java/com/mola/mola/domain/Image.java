@@ -18,7 +18,7 @@ public class Image {
     private Long id;
     private String url;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "outsource_id", referencedColumnName = "outsource_id")
     private OutSource outSource;
@@ -35,6 +35,7 @@ public class Image {
     @Column(name = "width")
     private Double width;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "image", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private WorkHistory workHistory;
 }

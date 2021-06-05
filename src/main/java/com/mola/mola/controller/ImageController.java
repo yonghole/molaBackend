@@ -1,14 +1,21 @@
 package com.mola.mola.controller;
 
 import com.mola.mola.domain.Image;
+import com.mola.mola.domain.WorkHistory;
 import com.mola.mola.service.ImageService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.joda.time.DateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +27,19 @@ public class ImageController {
     public ResponseEntity<RandomImageInquiryResponse> getRandomImage(){
         RandomImageInquiryResponse response = RandomImageInquiryResponse.of(imageService.getRandomImage());
         return new ResponseEntity<RandomImageInquiryResponse>(response, HttpStatus.OK);
+    }
+
+    @Data
+    public static class RandomImageInquiryResponse{
+        private String url;
+        private Long imageId;
+
+        public static RandomImageInquiryResponse of(Image image){
+            RandomImageInquiryResponse randomImageInquiryResponse = new RandomImageInquiryResponse();
+            randomImageInquiryResponse.setUrl(image.getUrl());
+            randomImageInquiryResponse.setImageId(image.getId());
+            return randomImageInquiryResponse;
+        }
     }
 
     @PostMapping("/image/{image-id}")
@@ -47,18 +67,47 @@ public class ImageController {
         private Integer httpStatusCode = 200;
     }
 
-    @Data
-    public static class RandomImageInquiryResponse{
-        private String url;
-        private Long imageId;
-
-        public static RandomImageInquiryResponse of(Image image){
-            RandomImageInquiryResponse randomImageInquiryResponse = new RandomImageInquiryResponse();
-            randomImageInquiryResponse.setUrl(image.getUrl());
-            randomImageInquiryResponse.setImageId(image.getId());
-            return randomImageInquiryResponse;
-        }
+    @GetMapping("/image/{image-id}")
+    public ResponseEntity<GetImageInformationResponse> getImageInformation(@PathVariable("image-id") Long imageId){
+        GetImageInformationResponse response = new GetImageInformationResponse();
+        Image image = imageService.getImage(imageId);
+        response.setImageInfo(ImageDto.of(image));
+        return new ResponseEntity<GetImageInformationResponse>(response, HttpStatus.OK);
     }
 
+    @Data
+    public static class GetImageInformationResponse{
+        private Integer httpStatusCode = 200;
+        private ImageDto imageInfo;
+    }
+
+    @Data
+    public static class ImageDto{
+        private Double yCoordinate;
+        private Double xCoordinate;
+        private Double height;
+        private Double width;
+        private String url;
+        private LocalDateTime workedTime;
+        private Long workerId;
+        private Boolean isRejected;
+
+        public static ImageDto of(Image image){
+
+            ImageDto imageDto = new ImageDto();
+
+            imageDto.setHeight(image.getHeight());
+            imageDto.setWidth(image.getWidth());
+            imageDto.setXCoordinate(image.getXCoordinate());
+            imageDto.setYCoordinate(image.getYCoordinate());
+            imageDto.setUrl(imageDto.getUrl());
+            imageDto.setWorkedTime(image.getWorkHistory().getWorkTime());
+            imageDto.setWorkerId(image.getWorkHistory().getUser().getId());
+            imageDto.setIsRejected(image.getWorkHistory().getIsRejected());
+
+            return imageDto;
+        }
+
+    }
 
 }
