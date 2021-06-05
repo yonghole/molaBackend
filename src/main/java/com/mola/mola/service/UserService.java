@@ -2,6 +2,7 @@ package com.mola.mola.service;
 
 import com.mola.mola.domain.User;
 import com.mola.mola.error.ErrorCode;
+import com.mola.mola.exception.EntityNotFoundException;
 import com.mola.mola.exception.InvalidValueException;
 import com.mola.mola.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +20,16 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public Optional<User> login(String email, String password){
-            if(userRepository.check(email,password) == 0) {
-                return userRepository.findByEmail(email);
-            }
-            else return null;
-    }
+//    public Optional<User> login(String email, String password){
+//        User user = userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXIST_ERROR));
+//        String pw =
+//
+//        if(userRepository.check(email,password) == 0) {
+//            return userRepository.findByEmail(email);
+//        }
+//
+//        else return null;
+//    }
 
     public void join(User user) throws DuplicatedEmailError{
         validateDuplicatedMember(user);
@@ -36,7 +41,7 @@ public class UserService {
     }
 
     private void validateDuplicatedMember(User user) {
-        boolean isNotDuplicated =  userRepository.findByEmail(user.getEmail()).isEmpty();
+        boolean isNotDuplicated = userRepository.findByEmail(user.getEmail()).isEmpty();
         if(!isNotDuplicated) {
             throw new DuplicatedEmailError(ErrorCode.EMAIL_DUPLICATION);
         }

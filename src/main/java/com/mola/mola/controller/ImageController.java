@@ -101,9 +101,12 @@ public class ImageController {
             imageDto.setXCoordinate(image.getXCoordinate());
             imageDto.setYCoordinate(image.getYCoordinate());
             imageDto.setUrl(imageDto.getUrl());
-            imageDto.setWorkedTime(image.getWorkHistory().getWorkTime());
-            imageDto.setWorkerId(image.getWorkHistory().getUser().getId());
-            imageDto.setIsRejected(image.getWorkHistory().getIsRejected());
+
+            if(image.getWorkHistory() != null) {
+                imageDto.setWorkedTime(image.getWorkHistory().getWorkTime());
+                imageDto.setWorkerId(image.getWorkHistory().getUser().getId());
+                imageDto.setIsRejected(image.getWorkHistory().getIsRejected());
+            }
 
             return imageDto;
         }

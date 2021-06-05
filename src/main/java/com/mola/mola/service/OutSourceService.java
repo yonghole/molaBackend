@@ -3,6 +3,7 @@ package com.mola.mola.service;
 import com.mola.mola.domain.Image;
 import com.mola.mola.domain.OutSource;
 import com.mola.mola.error.ErrorCode;
+import com.mola.mola.exception.BusinessException;
 import com.mola.mola.exception.EntityNotFoundException;
 import com.mola.mola.exception.InvalidValueException;
 import com.mola.mola.repository.ImageRepository;
@@ -32,9 +33,12 @@ public class OutSourceService {
     }
 
     public OutSource registerImageFiles(List<File> imageFiles, Long outSourceId){
-        OutSource outSource = outSourceRepository.findByID(outSourceId).orElseThrow(
-                () -> new EntityNotFoundException(ErrorCode.OUTSOURCE_ID_INVALID_ERROR)
+
+
+        OutSource outSource = outSourceRepository.findByID(outSourceId).orElseThrow(() ->
+            new BusinessException(ErrorCode.OUTSOURCE_ID_INVALID_ERROR)
         );
+
         // 해당 outsource 조회
 
         List<Image> imageList = new ArrayList<>();
@@ -52,17 +56,18 @@ public class OutSourceService {
     private void validateNotExistMember(Long user_id) {
         boolean userExists =  userRepository.findByUserId(user_id).isEmpty();
         if(userExists) {
-            throw new OutSourceService.UserNotExistError(ErrorCode.USER_NOT_EXIST_ERROR);
+            throw new EntityNotFoundException(ErrorCode.USER_NOT_EXIST_ERROR);
         }
     }
 
-    public static class UserNotExistError extends InvalidValueException {
-        public UserNotExistError(ErrorCode errorCode) {
-            super(errorCode);
-        }
-    }
+//    public static class UserNotExistError extends InvalidValueException {
+//        public UserNotExistError(ErrorCode errorCode) {
+//            super(errorCode);
+//        }
+//    }
 
     public List<OutSource> search(Long user_id){
+        userRepository.findByUserId(user_id).orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXIST_ERROR));
         return outSourceRepository.findByUserID(user_id);
     }
 

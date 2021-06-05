@@ -33,6 +33,8 @@ public class ReceiveFileController {
 
    @PostMapping("upload/")
    public String saveFile(@ModelAttribute @Valid FileReceiveDto fileReceiveDto) throws IOException{
+       receiveFileService.ValidateOsID(fileReceiveDto.getOutSourceId());
+       receiveFileService.ValidateUserID(fileReceiveDto.getUserId());
        String filePath= receiveFileService.saveFile(fileReceiveDto.getFile(), fileReceiveDto.getUserId().toString()); // 해당 파일을 저장하고
        List<File> fileList = receiveFileService.unzipFileByFilePath(filePath); // 해당 파일들을 unzip
        outSourceService.registerImageFiles(fileList, fileReceiveDto.getOutSourceId());
@@ -50,10 +52,10 @@ public class ReceiveFileController {
        private Long outSourceId;
    }
 
-    @ExceptionHandler(BusinessException.class)
-    protected ResponseEntity<ErrorResponse> handleBusinessException(final ReceiveFileService.UserIdNullError e) {
-        final ErrorCode errorCode = e.getErrorCode();
-        final ErrorResponse response = ErrorResponse.of(errorCode);
-        return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
-    }
+//    @ExceptionHandler(BusinessException.class)
+//    protected ResponseEntity<ErrorResponse> handleBusinessException(final ReceiveFileService.UserIdNullError e) {
+//        final ErrorCode errorCode = e.getErrorCode();
+//        final ErrorResponse response = ErrorResponse.of(errorCode);
+//        return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
+//    }
 }
