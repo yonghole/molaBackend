@@ -1,5 +1,6 @@
 package com.mola.mola.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,8 @@ public class Image {
     private Long id;
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "outsource_id", referencedColumnName = "outsource_id")
     private OutSource outSource;
 

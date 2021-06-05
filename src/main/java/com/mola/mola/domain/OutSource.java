@@ -1,5 +1,7 @@
 package com.mola.mola.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,10 +23,12 @@ public class OutSource {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     User user;
 
     @OneToMany(mappedBy = "outSource")
+    @JsonManagedReference
     List<Image> imageList;
 
     private String requirements;

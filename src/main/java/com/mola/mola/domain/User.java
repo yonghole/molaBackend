@@ -1,5 +1,6 @@
 package com.mola.mola.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,7 @@ public class User {
     private String phoneNum;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<OutSource> outSources;
 
 }
