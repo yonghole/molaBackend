@@ -9,6 +9,6 @@ import java.util.OptionalInt;
 public interface ImageRepository {
     Image createImage(String url);
     Optional<Image> findRandomImage();
-    void saveImage(Image image) throws IllegalStateException;
+    void saveImage(Image image);
     Optional<Image> findImageById(Long id);
 }

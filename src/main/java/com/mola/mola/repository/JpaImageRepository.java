@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -54,7 +55,12 @@ public class JpaImageRepository implements ImageRepository{
 
     @Override
     // 이미지 정보 저장.
-    public void saveImage(Image image) throws IllegalStateException {
-        em.persist(image);
+    public void saveImage(Image image) {
+        try {
+            em.persist(image);
+        }catch (PersistenceException ex){
+            System.out.println("1234");
+            System.out.println(ex.getCause());
+        }
     }
 }
