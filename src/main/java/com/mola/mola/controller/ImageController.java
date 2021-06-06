@@ -64,7 +64,7 @@ public class ImageController {
 
     @Data
     public static class SetNewImageInformationResponse {
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
     }
 
     @GetMapping("/image/{image-id}")
@@ -77,7 +77,7 @@ public class ImageController {
 
     @Data
     public static class GetImageInformationResponse{
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
         private ImageDto imageInfo;
     }
 

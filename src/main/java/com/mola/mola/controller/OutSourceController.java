@@ -108,7 +108,7 @@ public class OutSourceController {
 
     @Data
     public static class SearchOutSourceResponse{
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
         private List<OutSource> outSources;
     }
 
@@ -133,7 +133,7 @@ public class OutSourceController {
 
     @Data
     public static class GetOutSourceResponse{
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
         private OutSource outSourceInfo;
         private Image randomImageInfo;
     }

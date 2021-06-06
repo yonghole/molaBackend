@@ -5,7 +5,6 @@ import com.mola.mola.domain.OutSource;
 import com.mola.mola.error.ErrorCode;
 import com.mola.mola.exception.BusinessException;
 import com.mola.mola.exception.EntityNotFoundException;
-import com.mola.mola.exception.InvalidValueException;
 import com.mola.mola.repository.ImageRepository;
 import com.mola.mola.repository.OutSourceRepository;
 import com.mola.mola.repository.UserRepository;
