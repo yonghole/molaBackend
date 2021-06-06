@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -95,6 +96,11 @@ public class UserService {
         pointRecord.setPointChangeDate(currentDateTime);
         pointRecordRepository.create(pointRecord);
         return user.getPoint();
+    }
+
+    public List<PointRecord> searchPointHistory(Long user_id) throws UserNotExistError{
+        validateUserExistenceAndPoint(user_id,0,false);
+        return pointRecordRepository.search(user_id);
     }
 
     public static class NotEnoughPointError extends InvalidValueException{
