@@ -2,6 +2,7 @@ package com.mola.mola.controller;
 
 import com.mola.mola.auth.JwtUtils;
 import com.mola.mola.auth.UserDetailsImpl;
+import com.mola.mola.domain.PointRecord;
 import com.mola.mola.domain.User;
 import com.mola.mola.error.ErrorCode;
 import com.mola.mola.error.ErrorResponse;
@@ -24,6 +25,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -102,6 +104,20 @@ public class UserController {
         chargePointResponse.setPoint(userService.updatePoint(user_id,point));
 
         return new ResponseEntity<>(chargePointResponse,HttpStatus.OK);
+    }
+
+    @PostMapping("searchPointHistory/{user_id}")
+    public ResponseEntity<SearchPointResponse> search(@PathVariable("user_id") Long user_id){
+        SearchPointResponse searchPointResponse = new SearchPointResponse();
+        searchPointResponse.setPointRecord(userService.searchPointHistory(user_id));
+        return new ResponseEntity<>(searchPointResponse, HttpStatus.OK);
+    }
+
+
+    @Data
+    public static class SearchPointResponse{
+        private Integer httpStatusCode = 200;
+        private List<PointRecord> pointRecord;
     }
 
     @Data
