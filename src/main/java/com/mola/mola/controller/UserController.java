@@ -6,6 +6,7 @@ import com.mola.mola.domain.User;
 import com.mola.mola.error.ErrorCode;
 import com.mola.mola.error.ErrorResponse;
 import com.mola.mola.exception.BusinessException;
+import com.mola.mola.exception.EntityNotFoundException;
 import com.mola.mola.service.UserService;
 import lombok.Data;
 import lombok.Getter;
@@ -55,6 +56,11 @@ public class UserController {
         response.setJwt(jwt);
         response.setRole(roles);
 
+        User user = userService.findByUserId(userDetails.getId()).orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXIST_ERROR));
+
+        response.setName(user.getName());
+        response.setPoint(user.getPoint());
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -74,6 +80,8 @@ public class UserController {
         private String jwt;
         private Long id;
         private String email;
+        private Integer point;
+        private String name;
         private List<String> role;
     }
 
