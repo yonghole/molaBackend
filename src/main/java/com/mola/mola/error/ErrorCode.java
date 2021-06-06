@@ -20,9 +20,10 @@ public enum ErrorCode{
 
     EMAIL_DUPLICATION(409, "M001", "Email is Duplicated", HttpStatus.CONFLICT),
     LOGIN_INPUT_INVALID(400, "M002", "Login input is invalid", HttpStatus.BAD_REQUEST),
-    USER_NOT_EXIST_ERROR(404,"M003", "Invalid User ID", HttpStatus.NOT_FOUND),
+    USER_NOT_EXIST_ERROR(411,"M003", "Invalid User ID", HttpStatus.NOT_FOUND),
     USER_ID_NULL_ERROR(405,"M004","USER_ID is null.", HttpStatus.METHOD_NOT_ALLOWED),
     OUTSOURCE_ID_INVALID_ERROR(404,"M005","Invalid OutSource ID", HttpStatus.NOT_FOUND),
+    NOT_ENOUGH_POINT_ERROR(410,"P001","Not enough point", HttpStatus.BAD_REQUEST),
 
     IMAGE_NOT_FOUND(404,"M006","No Such Image", HttpStatus.NOT_FOUND);
 

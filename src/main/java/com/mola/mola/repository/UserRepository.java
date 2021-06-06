@@ -11,4 +11,5 @@ public interface UserRepository {
     List<User> findAll();
     Optional<User> findByEmail(String email);
     Optional<User> findByUserId(Long user_id);
+    void charge(Long user_id, Integer point_to_charge);
 }
