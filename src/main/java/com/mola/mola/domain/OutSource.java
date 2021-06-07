@@ -3,6 +3,7 @@ package com.mola.mola.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,7 @@ public class OutSource {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     User user;
 
+
     @OneToMany(mappedBy = "outSource")
     @JsonIgnore
     List<Image> imageList;
@@ -45,4 +47,6 @@ public class OutSource {
         image.setOutSource(this);
         this.imageList.add(image);
     }
+
+
 }

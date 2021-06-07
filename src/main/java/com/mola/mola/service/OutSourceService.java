@@ -1,5 +1,6 @@
 package com.mola.mola.service;
 
+import com.mola.mola.controller.OutSourceController;
 import com.mola.mola.domain.Image;
 import com.mola.mola.domain.OutSource;
 import com.mola.mola.error.ErrorCode;
@@ -66,7 +67,9 @@ public class OutSourceService {
 //        }
 //    }
 
-    public List<OutSource> search(Long user_id){
+
+
+    public List<OutSourceController.OutSourceDto> search(Long user_id){
         userRepository.findByUserId(user_id).orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXIST_ERROR));
         return outSourceRepository.findByUserID(user_id);
     }
