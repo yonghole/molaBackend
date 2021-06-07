@@ -2,6 +2,7 @@ package com.mola.mola.controller;
 
 import com.mola.mola.auth.JwtUtils;
 import com.mola.mola.auth.UserDetailsImpl;
+import com.mola.mola.domain.PointRecord;
 import com.mola.mola.domain.User;
 import com.mola.mola.error.ErrorCode;
 import com.mola.mola.error.ErrorResponse;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,6 +86,45 @@ public class UserController {
         private Integer point;
         private String name;
         private List<String> role;
+    }
+
+//    @Getter
+//    public static class ChargePointRequest{
+//        @NotNull
+//        private Long user_id;
+//        @NotNull
+//        private Long point_to_charge;
+//    }
+
+
+    @PostMapping("updatePoint/{user_id}/{point_to_charge}")
+    public ResponseEntity<ChargePointResponse> charge(@PathVariable("user_id") Long user_id, @PathVariable("point_to_charge") Integer point){
+        ChargePointResponse chargePointResponse = new ChargePointResponse();
+        chargePointResponse.setUser_id(user_id);
+        chargePointResponse.setPoint(userService.updatePoint(user_id,point));
+
+        return new ResponseEntity<>(chargePointResponse,HttpStatus.OK);
+    }
+
+    @PostMapping("searchPointHistory/{user_id}")
+    public ResponseEntity<SearchPointResponse> search(@PathVariable("user_id") Long user_id){
+        SearchPointResponse searchPointResponse = new SearchPointResponse();
+        searchPointResponse.setPointRecord(userService.searchPointHistory(user_id));
+        return new ResponseEntity<>(searchPointResponse, HttpStatus.OK);
+    }
+
+
+    @Data
+    public static class SearchPointResponse{
+        private Integer httpStatusCode = 200;
+        private List<PointRecord> pointRecord;
+    }
+
+    @Data
+    public static class ChargePointResponse{
+        private Integer httpStatusCode = 200;
+        private Long user_id;
+        private Integer point;
     }
 
     @PostMapping("signup")

@@ -20,13 +20,14 @@ server:
 
 spring:
    #영현 로컬 실행 환경
+
 #    datasource:
 #        driver-class-name: com.mysql.cj.jdbc.Driver
 #        password: '!!dnwn556'
 #        url: jdbc:mysql://localhost:3306/mola?serverTimezone=UTC&characterEncoding=UTF-8
 #        username: eden6187
 
-#    #상호 실행 환경
+    #상호 실행 환경
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         password: password
