@@ -32,9 +32,11 @@ public class JpaImageRepository implements ImageRepository{
         return image;
     }
 
+    /**
+     * 작업이 이루어지지 않은 image 혹은 작업이 이루어졌지만 reject 된 image 중에서 랜덤으로 image를 반환한다.
+     */
     @Override
-    // 랜덤으로 하나의 image를 선택한다.
-    public Optional<Image> findRandomImage() {
+    public Optional<Image> findUndoneImageRandomly() {
 
         String sql = "select image.*\n" +
                 "from image\n" +
@@ -47,6 +49,8 @@ public class JpaImageRepository implements ImageRepository{
         if(imageList.isEmpty()) return Optional.empty();
         return Optional.ofNullable((Image) imageList.get(0));
     }
+
+
 
     @Override
     public Optional<Image> findImageById(Long id) {

@@ -70,8 +70,10 @@ public class OutSourceService {
         return outSourceRepository.findByUserID(user_id);
     }
 
-    public Image getRandomImageOf(OutSource outSource){
+    public Image randomlyGetDoneImageOf(OutSource outSource){
+        // 1. 해당 아웃소스가 실제로 존재하는지 확인한다.
         outSourceRepository.findByID(outSource.getId()).orElseThrow(() -> new EntityNotFoundException(ErrorCode.OUTSOURCE_ID_INVALID_ERROR));
+
         int imageMaxIdx = outSource.getImageList().size();
         int min = 0;
         int max = imageMaxIdx;
