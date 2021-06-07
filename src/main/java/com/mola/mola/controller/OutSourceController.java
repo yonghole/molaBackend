@@ -126,10 +126,8 @@ public class OutSourceController {
     @Data
     public static class SearchOutSourceResponse{
 
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
         private List<OutSourceDto> outSources;
-
-      
 
     }
 
