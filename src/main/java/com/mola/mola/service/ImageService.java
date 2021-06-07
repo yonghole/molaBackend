@@ -34,6 +34,9 @@ public class ImageService {
         User user = userRepository.findByUserId(newImageInformationRequest.getUserId()).orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXIST_ERROR));
         WorkHistory workHistory = WorkHistory.withTimeOf(image, user);
 
+        System.out.println(newImageInformationRequest.getXCoordinate());
+        System.out.println(newImageInformationRequest.getYCoordinate());
+
         image.setXCoordinate(newImageInformationRequest.getXCoordinate());
         image.setYCoordinate(newImageInformationRequest.getYCoordinate());
         image.setWidth(newImageInformationRequest.getWidth());

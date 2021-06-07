@@ -45,15 +45,15 @@ public class ImageController {
     @Data
     public static class SetNewImageInformationRequest{
         @NotNull
-        private Long userId;
+        public Long userId;
         @NotNull
-        private Double yCoordinate;
+        public Double yCoordinate;
         @NotNull
-        private Double xCoordinate;
+        public Double xCoordinate;
         @NotNull
-        private Double height;
+        public Double height;
         @NotNull
-        private Double width;
+        public Double width;
     }
 
     @Data
