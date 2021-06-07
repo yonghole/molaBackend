@@ -25,13 +25,18 @@ public class ImageController {
 
     @Data
     public static class RandomImageInquiryResponse{
+        private Integer status = 200;
         private String url;
         private Long imageId;
+        private String requirements;
+        private Long credit;
 
         public static RandomImageInquiryResponse of(Image image){
             RandomImageInquiryResponse randomImageInquiryResponse = new RandomImageInquiryResponse();
             randomImageInquiryResponse.setUrl(image.getUrl());
             randomImageInquiryResponse.setImageId(image.getId());
+            randomImageInquiryResponse.setCredit(image.getOutSource().getCredit());
+            randomImageInquiryResponse.setRequirements(image.getOutSource().getRequirements());
             return randomImageInquiryResponse;
         }
     }
