@@ -116,13 +116,13 @@ public class UserController {
 
     @Data
     public static class SearchPointResponse{
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
         private List<PointRecord> pointRecord;
     }
 
     @Data
     public static class ChargePointResponse{
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
         private Long user_id;
         private Integer point;
     }

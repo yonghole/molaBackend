@@ -3,9 +3,6 @@ package com.mola.mola.controller;
 import com.mola.mola.domain.Image;
 import com.mola.mola.domain.OutSource;
 import com.mola.mola.domain.User;
-import com.mola.mola.error.ErrorCode;
-import com.mola.mola.error.ErrorResponse;
-import com.mola.mola.exception.BusinessException;
 import com.mola.mola.service.OutSourceService;
 import com.mola.mola.service.UserService;
 import lombok.Data;
@@ -17,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -129,8 +125,12 @@ public class OutSourceController {
 
     @Data
     public static class SearchOutSourceResponse{
+
         private Integer httpStatusCode = 200;
         private List<OutSourceDto> outSources;
+
+      
+
     }
 
     @GetMapping("/searchUserOSList/{outsource-id}")
@@ -138,7 +138,7 @@ public class OutSourceController {
             GetOutSourceResponse response = new GetOutSourceResponse();
 
             OutSource outSource = outSourceService.getOutsourceById(outsourceId);
-            Image image = outSourceService.getRandomImageOf(outSource);
+            Image image = outSourceService.randomlyGetDoneImageOf(outSource);
 
             response.setOutSourceInfo(outSource);
             response.setRandomImageInfo(image);
@@ -154,7 +154,7 @@ public class OutSourceController {
 
     @Data
     public static class GetOutSourceResponse{
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
         private OutSource outSourceInfo;
         private Image randomImageInfo;
     }
