@@ -1,19 +1,13 @@
 package com.mola.mola.controller;
 
 import com.mola.mola.domain.Image;
-import com.mola.mola.domain.WorkHistory;
 import com.mola.mola.service.ImageService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.joda.time.DateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -25,7 +19,7 @@ public class ImageController {
 
     @GetMapping("/image")
     public ResponseEntity<RandomImageInquiryResponse> getRandomImage(){
-        RandomImageInquiryResponse response = RandomImageInquiryResponse.of(imageService.getRandomImage());
+        RandomImageInquiryResponse response = RandomImageInquiryResponse.of(imageService.getUndoneImageRandomly());
         return new ResponseEntity<RandomImageInquiryResponse>(response, HttpStatus.OK);
     }
 
@@ -64,7 +58,7 @@ public class ImageController {
 
     @Data
     public static class SetNewImageInformationResponse {
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
     }
 
     @GetMapping("/image/{image-id}")
@@ -77,7 +71,7 @@ public class ImageController {
 
     @Data
     public static class GetImageInformationResponse{
-        private Integer httpStatusCode = 200;
+        private Integer status = 200;
         private ImageDto imageInfo;
     }
 

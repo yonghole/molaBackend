@@ -8,7 +8,7 @@ import java.util.OptionalInt;
 
 public interface ImageRepository {
     Image createImage(String url);
-    Optional<Image> findRandomImage();
+    Optional<Image> findUndoneImageRandomly();
     void saveImage(Image image);
     Optional<Image> findImageById(Long id);
 }
