@@ -8,6 +8,7 @@ import com.mola.mola.service.UserService;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,9 +104,33 @@ public class OutSourceController {
     }
 
     @Data
+    public static class OutSourceDto{
+        private Long id;
+        private String requirements;
+        private Long imgTotal;
+        private Long imgCompleted;
+        private Long credit;
+        private String title;
+        private List<Image> completedImageList;
+
+        public OutSourceDto(OutSource outSource) {
+            this.id = outSource.getId();
+            this.requirements = outSource.getRequirements();
+            this.imgTotal = outSource.getImgTotal();
+            this.imgCompleted = outSource.getImgCompleted();
+            this.credit = outSource.getCredit();
+            this.title = outSource.getTitle();
+        }
+    }
+
+    @Data
     public static class SearchOutSourceResponse{
-        private Integer status = 200;
-        private List<OutSource> outSources;
+
+        private Integer httpStatusCode = 200;
+        private List<OutSourceDto> outSources;
+
+      
+
     }
 
     @GetMapping("/searchUserOSList/{outsource-id}")
